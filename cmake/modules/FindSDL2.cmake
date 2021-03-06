@@ -68,6 +68,22 @@ if(NOT TARGET "SDL2::SDL2")
         add_library("SDL2::SDL2" INTERFACE IMPORTED GLOBAL)
         target_include_directories("SDL2::SDL2" SYSTEM INTERFACE "${SDL2_INCLUDE_DIR}")
         target_link_libraries("SDL2::SDL2" INTERFACE "${SDL2_LIBRARY}")
+
+        get_filename_component(_SDL2_LIBRARY_EXT "${SDL2_LIBRARY}" EXT)
+        if(_SDL2_LIBRARY_EXT STREQUAL CMAKE_STATIC_LIBRARY_SUFFIX)
+            if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+                target_link_libraries("SDL2::SDL2" INTERFACE
+                    "gdi32"
+                    "imm32"
+                    "kernel32"
+                    "setupapi"
+                    "user32"
+                    "version"
+                    "winmm"
+                )
+            endif()
+        endif()
+        unset(_SDL2_LIBRARY_EXT)
     endif()
 
     if(SDL2_VERSION AND SDL2_main_LIBRARY)

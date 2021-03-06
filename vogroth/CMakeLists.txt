@@ -18,6 +18,10 @@ set(VOGROTH_SOURCES
     "src/vector_math.c"
     "src/video.c"
 )
+set(VOGROTH_WIN32_SOURCES
+    "src/system_win32.c"
+    "src/unicode.c"
+)
 set(VOGROTH_UNIX_SOURCES
     "src/system_unix.c"
 )
@@ -27,7 +31,7 @@ set(VOGROTH_UNIX_SOURCES
 #
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    message(FATAL_ERROR "Windows is not yet supported")
+    list(APPEND VOGROTH_SOURCES ${VOGROTH_WIN32_SOURCES})
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     message(FATAL_ERROR "MacOS is not yet supported")
 elseif(UNIX)

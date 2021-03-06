@@ -7,6 +7,9 @@
  */
 
 #include <string.h>
+#ifdef _WIN32
+# include <windows.h>
+#endif
 
 #include <SDL_events.h>
 
@@ -15,6 +18,7 @@
 #include "render.h"
 #include "sandbox.h"
 #include "system.h"
+#include "unicode.h"
 #include "video.h"
 
 static bool quit_requested = false;
@@ -112,10 +116,43 @@ static int vogroth_main(int argc, char **argv)
  * Entry point on most platforms.
  */
 #ifndef _WIN32
-
 int main(int argc, char *argv[])
 {
     return vogroth_main(argc, argv);
 }
-
 #endif /* !defined(_WIN32) */
+
+/*
+ * Entry point on Windows.
+ */
+#ifdef _WIN32
+int WINAPI wWinMain(
+    UNUSED HINSTANCE hInstance,
+    UNUSED HINSTANCE hPrevInstance,
+    UNUSED LPWSTR lpCmdLine,
+    UNUSED int nShowCmd)
+{
+    int argc = __argc;
+    wchar_t **wargv = __wargv;
+    char **argv;
+    int i;
+    int result;
+
+    /* Convert the command line to UTF-8 */
+    if (argc < 0) {
+        argc = 0;
+    }
+    argv = mem_alloc_array((size_t)argc, sizeof(*argv));
+    for (i = 0; i < argc; ++i) {
+        argv[i] = wide_to_utf8(-1, wargv[i], NULL);
+    }
+
+    result = vogroth_main(argc, argv);
+
+    for (i = 0; i < argc; ++i) {
+        mem_free(argv[i]);
+    }
+    mem_free(argv);
+    return result;
+}
+#endif /* defined(_WIN32) */

@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION "3.16")
 
 if(NOT TARGET "libzip::zip")
     include("FindPackageHandleStandardArgs")
+    find_package("ZLIB")
 
     unset(LIBZIP_FOUND)
     unset(LIBZIP_VERSION)
@@ -55,11 +56,11 @@ if(NOT TARGET "libzip::zip")
         unset(_LIBZIP_VERSION_PATCH)
     endif()
 
-    if(LIBZIP_VERSION AND LIBZIP_LIBRARY)
+    if(LIBZIP_VERSION AND LIBZIP_LIBRARY AND ZLIB_FOUND)
         set(LIBZIP_FOUND ON CACHE INTERNAL "")
         add_library("libzip::zip" INTERFACE IMPORTED GLOBAL)
         target_include_directories("libzip::zip" SYSTEM INTERFACE ${LIBZIP_INCLUDE_DIR})
-        target_link_libraries("libzip::zip" INTERFACE ${LIBZIP_LIBRARY})
+        target_link_libraries("libzip::zip" INTERFACE ${LIBZIP_LIBRARY} "ZLIB::ZLIB")
     endif()
 
     find_package_handle_standard_args("libzip"

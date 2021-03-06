@@ -17,6 +17,15 @@ set(VALGRIND "valgrind" CACHE STRING "Command for debugging memory")
 set(TOP_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 #
+# Included Conan packages
+#
+
+if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake")
+    include("${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake")
+    conan_basic_setup(NO_OUTPUT_DIRS SKIP_FPIC SKIP_STD)
+endif()
+
+#
 # Set common compiler flags
 #
 
