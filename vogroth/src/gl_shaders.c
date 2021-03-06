@@ -167,7 +167,7 @@ void gl_use_program(struct gl_program *program)
     if (program->uni_texture >= 0) {
         pglUniform1i(program->uni_texture, RENDER_GL_TEXTURE_UNIT_TEXTURE);
     }
-    if (program->uni_texture_size >= 0) {
-        //TODO when textures are implemented
+    if (program->uni_texture_size >= 0 && gl_state.texture) {
+        pglUniform2i(program->uni_texture_size, gl_state.texture->size.x, gl_state.texture->size.y);
     }
 }

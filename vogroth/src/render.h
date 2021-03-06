@@ -11,6 +11,8 @@
 
 #include "types.h"
 
+struct texture;
+
 void render_init(void);
 void render_fini(void);
 void render_begin_frame(void);
@@ -18,5 +20,6 @@ void render_end_frame(void);
 
 /* Sets the transform to world coordinates = screen coordinates */
 void render_use_ui_transform(void);
+void render_use_texture(struct texture *texture);
 
 #endif /* INCLUDED_RENDER_H */

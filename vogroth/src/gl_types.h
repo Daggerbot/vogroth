@@ -9,7 +9,7 @@
 #ifndef INCLUDED_GL_TYPES_H
 #define INCLUDED_GL_TYPES_H
 
-#include "types.h"
+#include "pixbuf.h"
 
 /*
  * Define the OpenGL types without dragging in all of <GL/gl.h>. If any of
@@ -31,6 +31,12 @@ struct sprite_vertex {
     struct vec2i position;
     struct vec2f texture_coord;
     struct vec4f color;
+};
+
+struct texture {
+    GLuint id;
+    struct vec2i size;
+    enum pixel_format format;
 };
 
 #endif /* INCLUDED_GL_TYPES_H */

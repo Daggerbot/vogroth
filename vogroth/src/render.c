@@ -46,3 +46,13 @@ void render_use_ui_transform(void)
     gl_use_transform(mat4f_ortho((struct vec3f) {0.0f, (float)surface_size.y, -1.0f},
                                  (struct vec3f) {(float)surface_size.x, 0.0f, 1.0f}));
 }
+
+void render_use_texture(struct texture *texture)
+{
+    if (texture == gl_state.texture) {
+        return;
+    }
+    pglActiveTexture(GL_TEXTURE0 + RENDER_GL_TEXTURE_UNIT_TEXTURE);
+    pglBindTexture(GL_TEXTURE_2D, texture ? texture->id : 0);
+    gl_state.texture = texture;
+}

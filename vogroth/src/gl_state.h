@@ -17,6 +17,7 @@ typedef uint32_t gl_attrib_mask_t;
 struct gl_state {
     struct gl_program *program;
     struct mat4f transform;
+    struct texture *texture;
     gl_attrib_mask_t attrib_mask;
 };
 #define RENDER_GL_STATE_INIT \

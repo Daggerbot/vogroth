@@ -12,9 +12,11 @@ set(VOGROTH_SOURCES
     "src/gl_state.c"
     "src/main.c"
     "src/memory.c"
+    "src/pixbuf.c"
     "src/render.c"
     "src/rw.c"
     "src/sandbox.c"
+    "src/texture.c"
     "src/vector_math.c"
     "src/video.c"
 )
