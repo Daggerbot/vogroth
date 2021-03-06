@@ -66,6 +66,8 @@ if(MINGW)
     target_link_options("vogroth" PRIVATE "-mwindows" "-municode")
 endif()
 
+install(TARGETS "vogroth")
+
 #
 # Generate a build configuration header
 #

@@ -97,3 +97,12 @@ if(CMAKE_GENERATOR STREQUAL "Ninja" OR CMAKE_GENERATOR STREQUAL "Unix Makefiles"
         DEPENDS "vogroth" "assets"
         USES_TERMINAL)
 endif()
+
+#
+# Install documentation
+#
+
+install(
+    FILES "CREDITS.txt"
+          "LICENSE-MPL-2.0.txt"
+    DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")
