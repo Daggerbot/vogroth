@@ -1,0 +1,11 @@
+# Copyright (c) 2021 Marty Mills <daggerbot@gmail.com>
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+assets:
+  - name: shaders/glsl110/sprites.vert
+  - name: shaders/glsl110/sprites_alpha.frag
+  - name: shaders/glsl110/sprites_rgb.frag
+  - name: shaders/glsl110/sprites_rgba.frag
