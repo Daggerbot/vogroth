@@ -9,13 +9,9 @@
 #include "debug.h"
 #include "gl_api.h"
 #include "gl_state.h"
+#include "memory.h"
 #include "pixbuf.h"
 #include "texture.h"
-
-#define MAX_TEXTURES 16
-
-static struct texture all_textures[MAX_TEXTURES] = {0};
-static int next_texture_index = 0;
 
 static GLenum get_gl_pixel_format(enum pixel_format format)
 {
@@ -42,7 +38,6 @@ static GLenum get_gl_pixel_type(UNUSED enum pixel_format format)
 
 struct texture *texture_create(struct vec2i size, enum pixel_format format)
 {
-    int index = next_texture_index;
     struct texture *texture;
     GLenum gl_pixel_format = get_gl_pixel_format(format);
     GLenum gl_pixel_type = get_gl_pixel_type(format);
@@ -50,18 +45,8 @@ struct texture *texture_create(struct vec2i size, enum pixel_format format)
 
     gl_flush_errors();
 
-    /* Get the next available texture struct */
-    while (1) {
-        if (!all_textures[index].id) {
-            texture = all_textures + index;
-            next_texture_index = (index + 1) % MAX_TEXTURES;
-            break;
-        }
-        index = (index + 1) % MAX_TEXTURES;
-        if (index == next_texture_index) {
-            FATAL("Maximum textures exceeded");
-        }
-    }
+    texture = mem_alloc(sizeof(*texture));
+    *texture = (struct texture){0};
 
     pglGenTextures(1, &texture->id);
     if (!texture->id) {
@@ -87,7 +72,7 @@ void texture_destroy(struct texture *texture)
     if (texture->id && pglDeleteTextures) {
         pglDeleteTextures(1, &texture->id);
     }
-    *texture = (struct texture){0};
+    mem_free(texture);
 
     /* Detach the texture from the renderer */
     if (gl_state.texture == texture) {

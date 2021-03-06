@@ -11,7 +11,15 @@
 
 #include "types.h"
 
+struct sprite_batch;
 struct texture;
+
+enum sprite_mode {
+    SPRITE_MODE_NONE,
+    SPRITE_MODE_MASK,
+    SPRITE_MODE_RGB,
+    SPRITE_MODE_RGB_MASK,
+};
 
 void render_init(void);
 void render_fini(void);
@@ -21,5 +29,12 @@ void render_end_frame(void);
 /* Sets the transform to world coordinates = screen coordinates */
 void render_use_ui_transform(void);
 void render_use_texture(struct texture *texture);
+
+void render_begin_sprites(struct sprite_batch *batch, enum sprite_mode mode);
+void render_draw_sprites(int first, int count);
+void render_end_sprites(void);
+/* Calls all 3 of the above functions */
+void render_draw_sprites_now(struct sprite_batch *batch, enum sprite_mode mode,
+                             int first, int count);
 
 #endif /* INCLUDED_RENDER_H */

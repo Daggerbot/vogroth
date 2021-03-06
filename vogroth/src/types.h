@@ -38,6 +38,10 @@ struct vec4f {
     float x, y, z, w;
 };
 
+struct rect2i {
+    struct vec2i a, b;
+};
+
 struct mat4f {
     struct vec4f x, y, z, w;
 };

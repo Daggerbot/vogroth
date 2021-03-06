@@ -33,6 +33,13 @@ struct sprite_vertex {
     struct vec4f color;
 };
 
+#define RENDER_VERTS_PER_SPRITE 4
+struct sprite_batch {
+    int num_sprites;
+    int num_verts;
+    struct sprite_vertex *verts;
+};
+
 struct texture {
     GLuint id;
     struct vec2i size;

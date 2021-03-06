@@ -16,6 +16,7 @@ set(VOGROTH_SOURCES
     "src/render.c"
     "src/rw.c"
     "src/sandbox.c"
+    "src/sprites.c"
     "src/texture.c"
     "src/vector_math.c"
     "src/video.c"

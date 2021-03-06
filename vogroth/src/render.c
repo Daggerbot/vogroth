@@ -56,3 +56,50 @@ void render_use_texture(struct texture *texture)
     pglBindTexture(GL_TEXTURE_2D, texture ? texture->id : 0);
     gl_state.texture = texture;
 }
+
+void render_begin_sprites(struct sprite_batch *batch, enum sprite_mode mode)
+{
+    DASSERT(batch && batch->num_sprites && !gl_state.sprite_batch);
+
+    switch (mode) {
+    case SPRITE_MODE_MASK:
+        gl_use_program(&gl_program_alpha_sprites);
+        break;
+    case SPRITE_MODE_RGB:
+        gl_use_program(&gl_program_rgb_sprites);
+        break;
+    case SPRITE_MODE_RGB_MASK:
+        gl_use_program(&gl_program_rgba_sprites);
+        break;
+    default:
+        FATAL("Invalid sprite_mode");
+    }
+
+    gl_use_sprite_vertex_ptr(batch->verts);
+    gl_state.sprite_batch = batch;
+}
+
+void render_draw_sprites(int first, int count)
+{
+    if (!count) {
+        return;
+    }
+    DASSERT(gl_state.sprite_batch != NULL);
+    DASSERT(first >= 0 && first <= gl_state.sprite_batch->num_sprites);
+    DASSERT(count >= 0 && count <= gl_state.sprite_batch->num_sprites - first);
+    pglDrawArrays(GL_QUADS, first * RENDER_VERTS_PER_SPRITE, count * RENDER_VERTS_PER_SPRITE);
+}
+
+void render_end_sprites(void)
+{
+    DASSERT(gl_state.sprite_batch != NULL);
+    gl_state.sprite_batch = NULL;
+}
+
+void render_draw_sprites_now(struct sprite_batch *batch, enum sprite_mode mode,
+                             int first, int count)
+{
+    render_begin_sprites(batch, mode);
+    render_draw_sprites(first, count);
+    render_end_sprites();
+}

@@ -19,6 +19,7 @@ struct gl_state {
     struct mat4f transform;
     struct texture *texture;
     gl_attrib_mask_t attrib_mask;
+    struct sprite_batch *sprite_batch;
 };
 #define RENDER_GL_STATE_INIT \
     { \
