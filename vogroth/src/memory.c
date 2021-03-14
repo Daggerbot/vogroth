@@ -166,6 +166,7 @@ void buf_vappendf(struct buf *buf, const char *fmt, va_list args)
     if (result < 0) {
         buf_appends(buf, fmt);
     }
+    buf->len += (size_t)result;
 }
 
 char *str_clone(const char *src)

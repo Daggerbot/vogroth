@@ -89,7 +89,7 @@ void gl_use_sprite_vertex_ptr(const struct sprite_vertex *ptr)
     }
     if (gl_state.program->attr_texture_coord >= 0) {
         pglVertexAttribPointer((GLuint)gl_state.program->attr_texture_coord,
-                               2, GL_FLOAT, GL_FALSE, sizeof(*ptr), &ptr->texture_coord.x);
+                               2, GL_INT, GL_FALSE, sizeof(*ptr), &ptr->texture_coord.x);
     }
     if (gl_state.program->attr_color >= 0) {
         pglVertexAttribPointer((GLuint)gl_state.program->attr_color,

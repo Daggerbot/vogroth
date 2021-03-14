@@ -63,6 +63,31 @@ size_t rw_read(struct rw *rw, size_t size, void *buf)
     return result;
 }
 
+size_t rw_read_all(struct rw *rw, size_t size, void *buf)
+{
+    size_t result;
+    size_t total_read = 0;
+
+    if (!size) {
+        return 0;
+    }
+    DASSERT(rw && rw->read && buf);
+
+    while (size > 0) {
+        result = rw->read(rw, size, buf);
+        rw->eof = !result;
+        if (rw->eof) {
+            break;
+        }
+        DASSERT(result <= size);
+        size -= result;
+        buf = (char *)buf + result;
+        total_read += result;
+    }
+
+    return total_read;
+}
+
 size_t rw_read_to_buf(struct rw *rw, size_t size, struct buf *buf)
 {
     char data[512];
@@ -78,7 +103,8 @@ size_t rw_read_to_buf(struct rw *rw, size_t size, struct buf *buf)
     while (size > 0) {
         pass_size = MIN(size, sizeof(data));
         result = rw->read(rw, pass_size, data);
-        if (!result) {
+        rw->eof = !result;
+        if (rw->eof) {
             break;
         }
         DASSERT(result <= pass_size);

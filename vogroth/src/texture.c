@@ -63,6 +63,8 @@ struct texture *texture_create(struct vec2i size, enum pixel_format format)
         FATAL("Initializing texture failed: %s", gl_strerror(errcode));
     }
 
+    texture->size = size;
+    texture->format = format;
     return texture;
 }
 

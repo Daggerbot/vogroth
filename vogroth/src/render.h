@@ -37,4 +37,7 @@ void render_end_sprites(void);
 void render_draw_sprites_now(struct sprite_batch *batch, enum sprite_mode mode,
                              int first, int count);
 
+/* Functions for debugging purposes, not optimized */
+void render_draw_texture(struct texture *texture, struct vec2i pos);
+
 #endif /* INCLUDED_RENDER_H */

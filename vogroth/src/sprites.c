@@ -73,22 +73,22 @@ void sprite_batch_put(struct sprite_batch *batch, int index, struct rect2i src_r
 
     verts[0] = (struct sprite_vertex) {
         .position = {pos.x, pos.y},
-        .texture_coord = {(float)src_rect.a.x, (float)src_rect.a.y},
+        .texture_coord = {src_rect.a.x, src_rect.a.y},
         .color = color,
     };
     verts[1] = (struct sprite_vertex) {
         .position = {pos.x, pos.y + size.y},
-        .texture_coord = {(float)src_rect.a.x, (float)src_rect.b.y},
+        .texture_coord = {src_rect.a.x, src_rect.b.y},
         .color = color,
     };
     verts[2] = (struct sprite_vertex) {
         .position = {pos.x + size.x, pos.y + size.y},
-        .texture_coord = {(float)src_rect.b.x, (float)src_rect.b.y},
+        .texture_coord = {src_rect.b.x, src_rect.b.y},
         .color = color,
     };
     verts[3] = (struct sprite_vertex) {
         .position = {pos.x + size.x, pos.y},
-        .texture_coord = {(float)src_rect.b.x, (float)src_rect.a.y},
+        .texture_coord = {src_rect.b.x, src_rect.a.y},
         .color = color,
     };
 }

@@ -15,4 +15,7 @@
 #define GAME_ID "vogroth"
 #define ASSETS_PACKAGE_NAME GAME_ID ".pkz"
 
+#define TILE_WIDTH 32
+#define TILE_HEIGHT 32
+
 #endif /* INCLUDED_GAME_DEFS_H */

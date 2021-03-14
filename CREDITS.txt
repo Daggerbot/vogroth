@@ -7,6 +7,10 @@ version 2.0. See LICENSE-MPL-2.0.txt in the project directory for more
 information. Vogroth Dawn also uses third-party libraries under other licenses.
 See below for more information.
 
+Except where otherwise specified, artwork and other assets are subject to the
+terms of Creative Commons Attribution-ShareAlike 4.0 International. See
+LICENSE-CC-BY-SA-4.0.txt for more information.
+
 ================================================================================
 
 zlib
@@ -89,3 +93,13 @@ freely, subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be
    misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
+
+================================================================================
+
+RLTiles
+
+Part (or all) of the graphic tiles used in this program are from the public
+domain Roguelike tileset "RLTiles". Some of the tiles have been modified for
+use in Vogroth Dawn.
+
+You can find the original tileset at: http://rltiles.sf.net

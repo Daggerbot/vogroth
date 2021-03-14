@@ -90,7 +90,7 @@ void gl_flush_errors(void);
     x(void, TexParameteri, GLenum, GLenum, GLint) \
     x(void, TexSubImage2D, GLenum, GLint, GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, const GLvoid *) \
     x(void, Uniform1i, GLint, GLint) \
-    x(void, Uniform2i, GLint, GLint, GLint) \
+    x(void, Uniform2f, GLint, GLfloat, GLfloat) \
     x(void, UniformMatrix4fv, GLint, GLsizei, GLboolean, const GLfloat *) \
     x(void, UseProgram, GLuint) \
     x(void, VertexAttribPointer, GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid *) \

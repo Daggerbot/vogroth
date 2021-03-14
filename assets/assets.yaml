@@ -9,3 +9,6 @@ assets:
   - name: shaders/glsl110/sprites_alpha.frag
   - name: shaders/glsl110/sprites_rgb.frag
   - name: shaders/glsl110/sprites_rgba.frag
+  - name: tileset.x
+    path: tiles/tileset.json
+    type: tileset

@@ -33,6 +33,7 @@ struct rw {
 
 int rw_close(struct rw *rw, char **out_err);
 size_t rw_read(struct rw *rw, size_t size, void *buf);
+size_t rw_read_all(struct rw *rw, size_t size, void *buf); /* Calls the inner read() function in a loop */
 size_t rw_read_to_buf(struct rw *rw, size_t size, struct buf *buf);
 size_t rw_write(struct rw *rw, size_t size, const void *buf);
 int rw_flush(struct rw *rw);

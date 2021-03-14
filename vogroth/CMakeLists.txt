@@ -18,12 +18,14 @@ set(VOGROTH_SOURCES
     "src/sandbox.c"
     "src/sprites.c"
     "src/texture.c"
+    "src/tiles.c"
     "src/vector_math.c"
     "src/video.c"
 )
 set(VOGROTH_WIN32_SOURCES
     "src/system_win32.c"
     "src/unicode.c"
+    "vogroth.rc"
 )
 set(VOGROTH_UNIX_SOURCES
     "src/system_unix.c"

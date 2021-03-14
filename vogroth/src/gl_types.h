@@ -29,7 +29,7 @@ typedef void GLvoid;
 
 struct sprite_vertex {
     struct vec2i position;
-    struct vec2f texture_coord;
+    struct vec2i texture_coord;
     struct vec4f color;
 };
 

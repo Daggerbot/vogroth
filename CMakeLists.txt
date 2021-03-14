@@ -10,7 +10,12 @@ project("vogroth" C)
 
 include("GNUInstallDirs")
 
+if(NOT CMAKE_GENERATOR STREQUAL "Ninja")
+    message(FATAL "Ninja generator is required")
+endif()
+
 set(GDB "gdb" CACHE STRING "GNU debugger command")
+set(NINJA "${CMAKE_MAKE_PROGRAM}" CACHE STRING "Ninja build command")
 set(PYTHON "python3" CACHE STRING "Command for running Python scripts")
 set(VALGRIND "valgrind" CACHE STRING "Command for debugging memory")
 

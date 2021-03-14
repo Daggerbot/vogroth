@@ -4,18 +4,22 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-set(ASSETS_BUILD_TOOL "${TOP_SOURCE_DIR}/tools/pkztool.py")
-set(ASSETS_INTERMEDIATE_DIR "obj")
-set(ASSETS_MAKEFILE "${CMAKE_CURRENT_SOURCE_DIR}/assets.yaml")
-set(ASSETS_PACKAGE "vogroth.pkz")
+set(ASSETS_BUILD_FILE "${CMAKE_CURRENT_BINARY_DIR}/assets.ninja")
+set(ASSETS_PACKAGE "${CMAKE_CURRENT_BINARY_DIR}/vogroth.pkz")
+set(ASSETS_SOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets.yaml")
+
+add_custom_command(
+    OUTPUT "${ASSETS_BUILD_FILE}"
+    COMMAND "${PYTHON}" "${TOP_SOURCE_DIR}/tools/assettool.py"
+            "-i" "${CMAKE_CURRENT_BINARY_DIR}"
+            "-o" "${ASSETS_PACKAGE}"
+            "-p" "${PYTHON}"
+            "-t" "${TOP_SOURCE_DIR}/tools"
+            "${ASSETS_SOURCE_FILE}"
+            "${ASSETS_BUILD_FILE}"
+    DEPENDS "${ASSETS_SOURCE_FILE}"
+            "${TOP_SOURCE_DIR}/tools/assettool.py")
 
 add_custom_target("assets" ALL
-    COMMAND ${PYTHON} ${ASSETS_BUILD_TOOL} "-d" ${ASSETS_INTERMEDIATE_DIR} "-o" ${ASSETS_PACKAGE} ${ASSETS_MAKEFILE}
-    BYPRODUCTS ${ASSETS_PACKAGE})
-
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${ASSETS_PACKAGE}" DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/games/vogroth")
-
-list(APPEND ADDITIONAL_CLEAN_FILES
-    ${ASSETS_PACKAGE}
-    ${ASSETS_INTERMEDIATE_DIR}
-)
+    COMMAND "${NINJA}" "-f" "${ASSETS_BUILD_FILE}"
+    DEPENDS "${ASSETS_BUILD_FILE}")
