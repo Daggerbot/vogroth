@@ -39,12 +39,16 @@ void render_end_frame(void)
     gl_flush_errors();
 }
 
-void render_use_ui_transform(void)
+void render_use_ui_transform(struct rect2i *out_bounds)
 {
     struct vec2i surface_size = video_get_surface_size();
 
     gl_use_transform(mat4f_ortho((struct vec3f) {0.0f, (float)surface_size.y, -1.0f},
                                  (struct vec3f) {(float)surface_size.x, 0.0f, 1.0f}));
+
+    if (out_bounds) {
+        *out_bounds = (struct rect2i) {{0, 0}, surface_size};
+    }
 }
 
 void render_use_texture(struct texture *texture)

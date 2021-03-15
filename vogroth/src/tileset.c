@@ -6,13 +6,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <string.h>
+
 #include "assets.h"
 #include "debug.h"
 #include "game_defs.h"
+#include "math.h"
+#include "memory.h"
 #include "pixbuf.h"
-#include "tiles.h"
+#include "render.h"
+#include "sprites.h"
+#include "tileset.h"
 
-#define TILESET_ASSET_NAME "tileset.x"
+#define TILESET_ASSET_NAME "tiles/tileset.x"
 #define TILESET_SIGNATURE 0xA287F078u
 
 /* Assumed when deserializing */
@@ -35,6 +41,10 @@ struct tileset *tileset_init(void)
     struct pixbuf image = {0};
     uint32_t image_data_size;
     int texture_dimension = 1;
+    int i;
+    uint16_t x, y;
+    uint16_t name_data_len;
+    uint16_t name_offset;
 
     if (tileset.texture) {
         return &tileset;
@@ -98,7 +108,46 @@ struct tileset *tileset_init(void)
     texture_upload(tileset.texture, &image, (struct vec2i){0, 0});
     pixbuf_fini(&image);
 
+    /* Load tile data. */
+    tileset.num_tiles = tile_count;
+    tileset.tiles = mem_alloc_array(tile_count, sizeof(*tileset.tiles));
+    memset(tileset.tiles, 0, sizeof(*tileset.tiles) * tile_count);
+    for (i = 0; i < (int)tile_count; ++i) {
+        rw_read_all(rw, 2, &x);
+        rw_read_all(rw, 2, &y);
+        tileset.tiles[i].src_rect.a = (struct vec2i){x, y};
+        tileset.tiles[i].src_rect.b = (struct vec2i){x + TILE_WIDTH, y + TILE_HEIGHT};
+    }
+    if (rw->eof) {
+        goto io_error;
+    }
+
+    /* Load tile names. */
+    rw_read_all(rw, 2, &name_data_len);
+    if (rw->eof) {
+        goto io_error;
+    } else if (name_data_len < 1) {
+        FATAL("%s: No tile name data", TILESET_ASSET_NAME);
+    }
+    tileset.name_data = mem_alloc(name_data_len);
+    rw_read_all(rw, name_data_len, tileset.name_data);
+    if (rw->eof) {
+        goto io_error;
+    } else if (tileset.name_data[name_data_len - 1] != 0) {
+        FATAL("%s: Tile name data is not null-terminated", TILESET_ASSET_NAME);
+    }
+    for (i = 0; i < (int)tile_count; ++i) {
+        rw_read_all(rw, 2, &name_offset);
+        if (rw->eof) {
+            goto io_error;
+        } else if (name_offset >= name_data_len) {
+            FATAL("%s: Invalid tile name offset", TILESET_ASSET_NAME);
+        }
+        tileset.tiles[i].name = tileset.name_data + name_offset;
+    }
+
     /* Success! */
+    rw_close(rw, NULL);
     return &tileset;
 
 io_error:

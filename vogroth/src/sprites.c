@@ -25,7 +25,9 @@ struct sprite_batch *sprite_batch_create(void)
 
 void sprite_batch_destroy(struct sprite_batch *batch)
 {
-    DASSERT(batch != NULL);
+    if (!batch) {
+        return;
+    }
     ASSERT(batch != gl_state.sprite_batch); /* Don't delete the active sprite batch */
     mem_free(batch->verts);
     mem_free(batch);

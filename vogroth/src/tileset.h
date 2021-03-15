@@ -12,13 +12,15 @@
 #include "texture.h"
 
 struct tile_def {
+    char *name;
     struct rect2i src_rect;
 };
 
 struct tileset {
-    struct texture *texture;
+    struct texture *texture; /* owned */
     int num_tiles;
-    struct tile_def tiles[];
+    char *name_data;
+    struct tile_def *tiles;
 };
 
 struct tileset *tileset_init(void);

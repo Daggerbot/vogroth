@@ -13,6 +13,7 @@
 #
 # Options:
 #   -d DEPFILE  Generate a depfile for make/ninja.
+#   -R DIR      Generate dependencies relative to DIR.
 
 import getopt
 import os
@@ -27,19 +28,6 @@ from vdutil import *
 
 SIGNATURE = 0xA287F078
 
-def unescape(s):
-    out = ""
-    for c in s:
-        if c == ' ':
-            out += "\\ "
-        elif c == '$':
-            out += "\\$"
-        elif c == '\\':
-            out += "\\\\"
-        else:
-            out += c
-    return out
-
 #
 # Entry point
 #
@@ -49,17 +37,24 @@ if __name__ == "__main__":
     #
 
     dep_path = None
-    opts, args = getopt.getopt(sys.argv[1:], "d:")
+    dep_base = None
+    opts, args = getopt.getopt(sys.argv[1:], "d:R:")
 
     for opt, param in opts:
         if opt == "-d":
             assert dep_path is None
             dep_path = param
+        elif opt == "-R":
+            assert dep_base is None
+            dep_base = param
 
     assert len(args) == 2
     in_path = args[0]
     src_dir = os.path.relpath(os.path.dirname(os.path.realpath(in_path)))
     out_path = args[1]
+
+    if dep_base is None:
+        dep_base = os.curdir
 
     #
     # Parse tileset file
@@ -91,6 +86,7 @@ if __name__ == "__main__":
         item = doc["tiles"][index]
 
         name = item["type"]
+        assert len(name) > 0
         assert not name in name_map
         name_map[name] = index
         name_bytes = bytearray(name + "\0", encoding="utf-8")
@@ -137,7 +133,8 @@ if __name__ == "__main__":
         os.makedirs(os.path.dirname(os.path.realpath(dep_path)), mode=0o755, exist_ok=True)
 
         with open(dep_path, "w") as fp:
-            fp.write("{}: {}".format(out_path, in_path))
+            fp.write("{}: {}".format(ninja_unescape(os.path.relpath(out_path, dep_base)),
+                                     ninja_unescape(os.path.relpath(in_path, dep_base))))
             for path in deps:
-                fp.write(" {}".format(unescape(path)))
+                fp.write(" {}".format(ninja_unescape(os.path.relpath(path, dep_base))))
             fp.write("\n")

@@ -19,3 +19,16 @@ def u16le(n):
 def u32le(n):
     assert type(n) is int and n >= 0 and n <= 0xFFFFFFFF
     return bytearray([n & 0xFF, (n >> 8) & 0xFF, (n >> 16) & 0xFF, n >> 24])
+
+def ninja_unescape(s):
+    out = ""
+    for c in s:
+        if c == ' ':
+            out += "\\ "
+        elif c == '$':
+            out += "\\$"
+        elif c == '\\':
+            out += "\\\\"
+        else:
+            out += c
+    return out

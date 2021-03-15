@@ -36,6 +36,8 @@ int rw_close(struct rw *rw, char **out_err)
                 mem_free(*out_err);
                 *out_err = rw->error;
                 rw->error = NULL;
+            } else {
+                LOG_ERROR("rw_close: %s", rw->error);
             }
         }
     } else {

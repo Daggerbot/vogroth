@@ -27,7 +27,7 @@ void render_begin_frame(void);
 void render_end_frame(void);
 
 /* Sets the transform to world coordinates = screen coordinates */
-void render_use_ui_transform(void);
+void render_use_ui_transform(struct rect2i *out_bounds);
 void render_use_texture(struct texture *texture);
 
 void render_begin_sprites(struct sprite_batch *batch, enum sprite_mode mode);
