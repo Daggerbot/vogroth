@@ -16,6 +16,10 @@ set(VALGRIND "valgrind" CACHE STRING "Command for debugging memory")
 
 set(TOP_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.20")
+    cmake_policy(SET CMP0116 OLD)
+endif()
+
 #
 # Included Conan packages
 #
@@ -113,5 +117,6 @@ endif()
 
 install(
     FILES "CREDITS.txt"
+          "LICENSE-CC-BY-SA-4.0.txt"
           "LICENSE-MPL-2.0.txt"
     DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")

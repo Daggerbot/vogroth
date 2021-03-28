@@ -17,6 +17,10 @@ set(TILESETS
     "tiles/tileset.json"
 )
 
+#
+# Compile intermediate assets.
+#
+
 set(MAP_TOOL "${TOP_SOURCE_DIR}/tools/mapcomp.py")
 set(PACKAGE_TOOL "${TOP_SOURCE_DIR}/tools/pkz.py")
 set(TILESET_TOOL "${TOP_SOURCE_DIR}/tools/tilesetcomp.py")
@@ -69,6 +73,10 @@ foreach(FILE ${TILESETS})
     unset(_DIR)
     unset(_NAME)
 endforeach()
+
+#
+# Build final asset package.
+#
 
 add_custom_command(
     OUTPUT ${PACKAGE}

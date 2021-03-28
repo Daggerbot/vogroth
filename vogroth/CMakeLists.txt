@@ -18,7 +18,6 @@ set(VOGROTH_SOURCES
     "src/sandbox.c"
     "src/sprites.c"
     "src/texture.c"
-    "src/tileset.c"
     "src/vector_math.c"
     "src/video.c"
 )
