@@ -12,6 +12,7 @@ There is nothing interesting to show yet.
 
 ## LICENSE
 
-The game's code is subject to the terms of the [Mozilla Public License version 2.0](LICENSE.txt).
+The game's code is subject to the terms of the
+[GNU General Public License version 3](LICENSE-GPL-3.0.txt).
 It also uses third-party libraries under other licenses.
 See [CREDITS.txt](CREDITS.txt) for more information.

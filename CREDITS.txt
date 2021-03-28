@@ -2,8 +2,8 @@ Vogroth Dawn
 
 Copyright (c) 2021 Marty Mills <daggerbot@gmail.com>
 
-Vogroth Dawn's code is subject to the terms of the Mozilla Public License
-version 2.0. See LICENSE-MPL-2.0.txt in the project directory for more
+Vogroth Dawn's code is subject to the terms of the GNU General Public License
+version 3. See LICENSE-GPL-3.0.txt in the project directory for more
 information. Vogroth Dawn also uses third-party libraries under other licenses.
 See below for more information.
 
