@@ -92,3 +92,4 @@ add_custom_command(
     DEPENDS ${PACKAGE_DEPENDS})
 
 add_custom_target("assets" ALL DEPENDS ${PACKAGE})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}" DESTINATION "${VOGROTH_INSTALL_DATADIR}")

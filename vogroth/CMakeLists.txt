@@ -82,7 +82,7 @@ if(MINGW)
     target_link_options("vogroth" PRIVATE "-mwindows" "-municode")
 endif()
 
-install(TARGETS "vogroth")
+install(TARGETS "vogroth" DESTINATION "${VOGROTH_INSTALL_BINDIR}")
 
 #
 # Generate a build configuration header
